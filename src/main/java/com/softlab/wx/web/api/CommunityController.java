@@ -32,6 +32,7 @@ public class CommunityController {
     }
 
     String oppidA = wxStepController.oppidA;
+
     @RequestMapping(value = "/detail/{systemId}", method = RequestMethod.GET)
     public RestData getCommunityDetailByCommunitySystemId(@PathVariable(value = "systemId") Integer systemId, HttpServletRequest request) {
         logger.info("getCommunityDetailBySystemId : ");
@@ -80,7 +81,7 @@ public class CommunityController {
     public RestData insertCommunity (@RequestParam(value = "files") MultipartFile file1, @RequestParam(value = "files") MultipartFile file2, @RequestParam(value = "files") MultipartFile file3, Community community, HttpServletRequest request, HttpServletResponse response){
         logger.info(" insertCommunity: " + JsonUtil.getJsonString(community));
         try {
-            boolean flag = communityService.insertCommunity(community, file1, file2, file3);
+            boolean flag = communityService.insertCommunity(community, file1, file2, file3, oppidA);
             return new RestData(flag);
         } catch (WxException e) {
             return new RestData(5,e.getMessage());
@@ -100,12 +101,12 @@ public class CommunityController {
     }
 
 
-    @RequestMapping(value = "/my/{writer}", method = RequestMethod.GET)
-    public RestData selectMyCommunity(@PathVariable(value = "writer") String writer,  HttpServletRequest request) throws WxException {
-        logger.info("selectMyCommunity: " + JsonUtil.getJsonString(writer));
+    @RequestMapping(value = "/my/{oppid}", method = RequestMethod.GET)
+    public RestData selectMyCommunity(@PathVariable(value = "oppid") String oppid,  HttpServletRequest request) throws WxException {
+        logger.info("selectMyCommunity: " + JsonUtil.getJsonString(oppid));
 
         try {
-            List <Map<String, Object>> data = communityService.selectAllCommunityByWriter(writer);
+            List <Map<String, Object>> data = communityService.selectAllCommunityByWriter(oppid);
             return new RestData(data);
         } catch (WxException e) {
             return new RestData(1, e.getMessage());
@@ -114,12 +115,11 @@ public class CommunityController {
     }
 
 
-    @RequestMapping(value = "/my/{writer}/delete/{systemId}", method = RequestMethod.POST)
-    public RestData deleteMyCommunity(@PathVariable(value = "writer") String writer, @PathVariable(value = "systemId") Integer systemId, HttpServletRequest request) throws WxException{
-        logger.info("deleteMyCommunity: " + JsonUtil.getJsonString(writer + systemId));
+    @RequestMapping(value = "/my/delete/{systemId}", method = RequestMethod.POST)
+    public RestData deleteMyCommunity(@PathVariable(value = "systemId") Integer systemId, HttpServletRequest request) throws WxException{
+        logger.info("deleteMyCommunity: " + JsonUtil.getJsonString(systemId));
         try {
             Community community = new Community();
-            community.setWriter(writer);
             community.setSystemId(systemId);
             boolean flag = communityService.deleteCommunityBySystemId(community);
             return new RestData(flag);

@@ -30,6 +30,16 @@ public class Community {
     private String writer;
 
     /**
+     * 文章作者ID
+     */
+    private String oppidA;
+
+    /**
+     * 文章作者头像
+     */
+    private String icon;
+
+    /**
      * 文章内容图片
      */
     private String pic;
@@ -92,13 +102,17 @@ public class Community {
         this.writer = writer;
     }
 
-    public String getPic() {
-        return pic;
-    }
+    public String getOppidA() { return oppidA; }
 
-    public void setPic(String pic) {
-        this.pic = pic;
-    }
+    public void setOppidA(String oppidA) { this.oppidA = oppidA; }
+
+    public String getIcon() { return icon; }
+
+    public void setIcon(String icon) { this.icon = icon; }
+
+    public String getPic() { return pic; }
+
+    public void setPic(String pic) { this.pic = pic; }
 
     public String getPic1() { return pic1; }
 

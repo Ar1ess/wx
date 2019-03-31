@@ -18,7 +18,7 @@ public class CommunityProvider {
                 SELECT("community_systemId as systemId, community_title as title, community_writer as writer, " +
                         "community_pic as pic, community_pic1 as pic1, community_pic2 as pic2, community_time as time, community_content as content, " +
                         "community_viewsNumber as viewsNumber, community_likesNumber as likesNumber, " +
-                        "community_commentsNumber as commentsNumber");
+                        "community_commentsNumber as commentsNumber, community_icon as icon");
                 FROM("community_article");
                 if (null != community.getSystemId()) {
                     WHERE("community_systemId=#{systemId}");

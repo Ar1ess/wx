@@ -30,6 +30,11 @@ public class Comment {
     private String writer;
 
     /**
+     * 评论作者ID
+     */
+    private String oppidA;
+
+    /**
      * 评论作者头像
      */
     private String pic;
@@ -74,6 +79,10 @@ public class Comment {
     public String getWriter() {
         return writer;
     }
+
+    public String getOppidA() { return oppidA; }
+
+    public void setOppidA(String oppidA) { this.oppidA = oppidA; }
 
     public void setWriter(String writer) {
         this.writer = writer;

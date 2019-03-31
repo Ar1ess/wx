@@ -38,6 +38,7 @@ public class CommunityServiceImpl implements CommunityService {
                 map.put("systemId", community.getSystemId());
                 map.put("title", community.getTitle());
                 map.put("writer", community.getWriter());
+                map.put("icon", community.getIcon());
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 map.put("time", formatter.format(community.getTime()));
                 map.put("content", community.getContent());
@@ -77,6 +78,7 @@ public class CommunityServiceImpl implements CommunityService {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 map.put("time", formatter.format(community1.getTime()));
                 map.put("viewsNumber", community1.getViewsNumber());
+                map.put("icon", community1.getIcon());
                 al.add(map);
             }
             return al;
@@ -100,6 +102,7 @@ public class CommunityServiceImpl implements CommunityService {
                 map.put("viewsNumber", community1.getViewsNumber());
                 map.put("writer", community1.getWriter());
                 map.put("title", community1.getTitle());
+                map.put("icon", community1.getIcon());
                 al.add(map);
             }
             return al;
@@ -112,7 +115,7 @@ public class CommunityServiceImpl implements CommunityService {
 
 
     @Override
-    public boolean insertCommunity(Community community, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws WxException{
+    public boolean insertCommunity(Community community, MultipartFile file1, MultipartFile file2, MultipartFile file3, String oppidA) throws WxException{
         boolean flag = false;
         if (null != community){
             if (null != file1) {
@@ -132,6 +135,9 @@ public class CommunityServiceImpl implements CommunityService {
             community.setLikesNumber(0);
             community.setCommentsNumber(0);
             community.setViewsNumber(0);
+            community.setOppidA(oppidA);
+            community.setWriter(communityMapper.getUserName(oppidA));
+            community.setIcon(communityMapper.getUserIcon(oppidA));
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             Date time = null;
             try {
@@ -202,9 +208,9 @@ public class CommunityServiceImpl implements CommunityService {
 
 
     @Override
-    public List<Map<String, Object>> selectAllCommunityByWriter(String writer) throws WxException{
+    public List<Map<String, Object>> selectAllCommunityByWriter(String oppidA) throws WxException{
         List<Map<String, Object>> Al = new ArrayList<>();
-        List <Community> communityList = communityMapper.selectAllCommunityByWriter(writer);
+        List <Community> communityList = communityMapper.selectAllCommunityByWriter(oppidA);
         if (null != communityList){
             for (Community community1 : communityList){
                 Map<String, Object> map = new HashMap<>(8);
@@ -212,6 +218,8 @@ public class CommunityServiceImpl implements CommunityService {
                 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 map.put("time", formatter.format(community1.getTime()));
                 map.put("commentsNumber", community1.getCommentsNumber());
+                map.put("icon", community1.getIcon());
+                map.put("writer", community1.getWriter());
                 Al.add(map);
             }
         } else{

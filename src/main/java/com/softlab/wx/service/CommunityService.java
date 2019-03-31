@@ -41,7 +41,7 @@ public interface CommunityService {
      * 发布文章
      *
      */
-    boolean insertCommunity(Community community, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws WxException;
+    boolean insertCommunity(Community community, MultipartFile file1, MultipartFile file2, MultipartFile file3, String oppidA) throws WxException;
 
     /**
      * 发布评论
@@ -58,7 +58,7 @@ public interface CommunityService {
     /**
      * 查询作者的所有问题
      */
-    List<Map<String, Object>> selectAllCommunityByWriter(String writer) throws WxException;
+    List<Map<String, Object>> selectAllCommunityByWriter(String oppidA) throws WxException;
 
 
     /**
